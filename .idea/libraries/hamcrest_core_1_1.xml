@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="hamcrest-core-1.1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/network-api/hamcrest-core-1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/network-api/mockito-core-1.10.19.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/network-api/network-api-1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/network-api/network-mock-1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/network-api/objenesis-2.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/network-api/protocol-1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/network-api/hamcrest-core-1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/network-api/mockito-core-1.10.19.jar!/" />
+    </SOURCES>
+  </library>
+</component>
