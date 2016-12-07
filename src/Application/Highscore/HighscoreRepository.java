@@ -1,59 +1,46 @@
 package Application.Highscore;
 
+import application.network.protocol.HiscoreEntry;
+
+import java.io.File;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
 /**
- * Created by siro on 20.11.16.
+ * Created by siro on 07.12.16.
  */
 
-import application.network.protocol.HiscoreEntry;
-import jdk.nashorn.internal.ir.IfNode;
-import sun.tools.tree.IfStatement;
 
-import java.sql.*;
-
-public class SqliteDB extends Highscore {
+public class HighscoreRepository extends Highscore {
 
     private String dbname = "PLAYERSCORE";
 
+    private SqliteUtil sqliteUtil = new SqliteUtil();
 
-    public SqliteDB() {
+
+    public HighscoreRepository() {
         boolean exists;
-        exists = ifDBExists();
 
-        if (exists = false) {
-            createDB();
-            createTable();
-        } else {
-            createTable();
+        exists  = sqliteUtil.ifDBExists();
+
+        if (exists == false){
+            sqliteUtil.createDB();
         }
-
+        sqliteUtil.createTable();
     }
 
     @Override
     public boolean updatePlayerScore(String playername, Integer score) {
 
-        Connection dbcon;
-        Statement stmt;
         Boolean state = false;
         Boolean userExists;
 
-        dbcon = getDBConnection();
 
         userExists = ifPlayerExists(playername);
         if (userExists) {
-            try {
-                stmt = dbcon.createStatement();
-                String sql = "UPDATE " + this.dbname + " SET SCORE = " + score + "WHERE playername = " + playername;
-
-                stmt.executeUpdate(sql);
-
-                stmt.close();
-                dbcon.commit();
-                dbcon.close();
-
-            } catch (Exception e) {
-                System.err.println(e.getClass().getName() + ": " + e.getMessage());
-                System.exit(0);
-            }
+            sqliteUtil.update(playername, score);
             System.out.println("Record updated successfully");
             state = true;
         } else {
@@ -161,28 +148,11 @@ public class SqliteDB extends Highscore {
 
 
     private boolean ifPlayerExists(String playername) {
-        Connection dbcon;
-        Statement stmt;
         Boolean state = false;
 
-        dbcon = getDBConnection();
 
-        try {
+        sqliteUtil.getHighscore(playername);
 
-            stmt = dbcon.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT id FROM " + this.dbname + " WHERE username = " + playername);
-
-            while (rs.next()) {
-                state = true;
-            }
-            rs.close();
-            stmt.close();
-            dbcon.close();
-
-        } catch (Exception e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-        }
         System.out.println("ifUserexists Operation done successfully");
 
 
@@ -198,9 +168,9 @@ public class SqliteDB extends Highscore {
 
         try {
             stmt = dbcon.createStatement();
-            String sql = "INSERT INTO " + this.dbname + " (USERNAME,SCORE) " +
+            String sql = "INSERT INTO " + this.dbname + " ( USERNAME,SCORE ) " +
                     "VALUES ( " + playername + "," + score + ")";
-            stmt.executeUpdate(sql);
+            stmt.execute(sql);
 
             stmt.close();
             dbcon.commit();
@@ -219,6 +189,7 @@ public class SqliteDB extends Highscore {
 
     private Connection getDBConnection() {
         Connection dbcon = null;
+
         try {
             Class.forName("org.sqlite.JDBC");
             dbcon = DriverManager.getConnection("jdbc:sqlite:" + this.dbname + ".db");
@@ -253,29 +224,17 @@ public class SqliteDB extends Highscore {
     }
 
     private boolean ifDBExists() {
-        Statement stmt = null;
-        Connection dbcon = null;
         boolean exists = false;
 
-        dbcon = getDBConnection();
-        try {
-            stmt = dbcon.createStatement();
+        File file = new File (dbname + ".db");
 
-            ResultSet resultSet = dbcon.getMetaData().getCatalogs();
-
-            while (resultSet.next()) {
-                // Get the database name, which is at position 1
-                String databaseName = resultSet.getString(1);
-                if (dbname == databaseName) {
-                    exists = true;
-                }
-            }
-            resultSet.close();
-
-            System.out.println("DB exist");
-        } catch (Exception e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-
+        if(file.exists()) //here's how to check
+        {
+            System.out.print("This database already exists");
+            exists = true;
+        }
+        else{
+            exists = false;
         }
 
         return exists;
@@ -291,7 +250,7 @@ public class SqliteDB extends Highscore {
 
         try {
             stmt = dbcon.createStatement();
-            String sql = "CREATE DATABASE" + dbname;
+            String sql = "CREATE DATABASE if not exists" + dbname;
             stmt.executeUpdate(sql);
             stmt.close();
             System.out.println("Database created successfully");

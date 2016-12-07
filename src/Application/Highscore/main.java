@@ -20,8 +20,8 @@ public class main extends Application {
         h.setPlayerName("Iseli");
         h.setScore(2);
 
-        SqliteDB db = new SqliteDB();
+        HighscoreRepository db = new HighscoreRepository();
 
-        db.updatePlayerScore_new(h);
+        //db.updatePlayerScore_new(h);
     }
 }
