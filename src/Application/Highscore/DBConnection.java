@@ -24,6 +24,7 @@ public class DBConnection {
 
     public Connection getDBConnection() {
         if (dbConnection != null) {
+
             return dbConnection;
         }
 
@@ -36,5 +37,15 @@ public class DBConnection {
         }
         System.out.println("Opened database PLAYERSCORE successfully");
         return dbConnection;
+    }
+
+    public void close(){
+        try {
+            dbConnection.close();
+        }catch (Exception e){
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+
     }
 }

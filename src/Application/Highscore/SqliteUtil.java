@@ -8,6 +8,8 @@ import application.network.protocol.HiscoreEntry;
 
 import java.io.File;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SqliteUtil {
 
@@ -17,39 +19,64 @@ public class SqliteUtil {
     }
 
 
-    public void update(String playername, Integer score) {
-        String sql = "UPDATE PLAYERSCORE SET SCORE = " + score + "WHERE USERNAME = " + playername;
+    public void update(HiscoreEntry hiscoreEntry) {
+        String sql = "UPDATE PLAYERSCORE SET SCORE = " +"'" + hiscoreEntry.getScore()+"'"  + "WHERE USERNAME = " +"'" + hiscoreEntry.getPlayerName()+"'";
         executeSQL(sql);
 
     }
 
-    public void insert(String playername, Integer score) {
-        String sql = "INSERT INTO PLAYERSCORE ( USERNAME,SCORE ) VALUES(" +"'" + playername + "'," + "'" + score + "'" +")";
+    public void insert(HiscoreEntry hiscoreEntry) {
+        String sql = "INSERT INTO PLAYERSCORE ( USERNAME,SCORE ) VALUES(" +"'" + hiscoreEntry.getPlayerName() + "'," + "'" + hiscoreEntry.getScore() + "'" +")";
         executeSQL(sql);
     }
 
-    public void delete(String playername) {
-        String sql = "DELETE FROM PLAYERSCORE WHERE USERNAME = " + playername;
+    public void delete(HiscoreEntry hiscoreEntry) {
+        String sql = "DELETE FROM PLAYERSCORE WHERE USERNAME = " +"'" + hiscoreEntry.getPlayerName() +"'";
         executeSQL(sql);
+        System.out.println("Deleted Highscore from "+hiscoreEntry.getPlayerName());
+    }
+
+    public void deleteAll() {
+        String sql = "DELETE FROM PLAYERSCORE";
+        executeSQL(sql);
+        System.out.println("Deleted all Highscores");
     }
 
 
-    //public boolean getAll() {
-
-    //}
-
-    public Integer getHighscore(String playername) {
+    public List<HiscoreEntry> getAllHighscores() {
+        List<HiscoreEntry> highscores;
         ResultSet res;
-        String sql = "SELECT id FROM PLAYERSCORE WHERE USERNAME = " +"'"+ playername+"'";
+
+        String sql = "SELECT USERNAME, SCORE FROM PLAYERSCORE";
         res = executeSQLwithResult(sql);
+        highscores = new ArrayList<HiscoreEntry>();
         try {
             while (res.next()) {
+                HiscoreEntry h = new HiscoreEntry();
 
+                h.setPlayerName(res.getString("USERNAME"));
+                h.setScore(res.getInt("SCORE"));
+                highscores.add(h);
             }
         } catch (Exception e) {
         }
 
-        return 0;
+        return highscores;
+    }
+
+    public Integer getHighscore(HiscoreEntry hiscoreEntry) {
+        ResultSet res;
+        Integer score = null;
+
+        String sql = "SELECT SCORE FROM PLAYERSCORE WHERE USERNAME = " +"'"+ hiscoreEntry.getPlayerName()+"'";
+        res = executeSQLwithResult(sql);
+        try {
+            while (res.next()) {
+                score = res.getInt("SCORE");
+            }
+        } catch (Exception e) {
+        }
+        return score;
     }
 
     public boolean ifDBExists() {
@@ -59,7 +86,7 @@ public class SqliteUtil {
 
         if(file.exists()) //here's how to check
         {
-            System.out.print("This database already exists");
+            System.out.println("This database already exists");
             exists = true;
         }
         else{
@@ -83,7 +110,7 @@ public class SqliteUtil {
     public void createTable() {
 
         String sql = "CREATE TABLE IF NOT EXISTS PLAYERSCORE (ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
-                     "USERNAME       TEXT    NOT NULL, " +
+                     "USERNAME       TEXT    NOT NULL UNIQUE, " +
                      "SCORE          INT     NOT NULL " +
                      ")";
 
@@ -99,8 +126,7 @@ public class SqliteUtil {
         try {
             stmt = con.createStatement();
             res = stmt.executeQuery(sql);
-            stmt.close();
-            con.close();
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -111,12 +137,13 @@ public class SqliteUtil {
     private void executeSQL(String sql) {
         Connection con = DBConnection.getInstance().getDBConnection();
         Statement stmt;
-
         try {
+            con.setAutoCommit(false);
+
             stmt = con.createStatement();
             stmt.executeUpdate(sql);
-            stmt.close();
-            con.close();
+
+            con.commit();
 
         } catch (Exception e) {
             e.printStackTrace();
