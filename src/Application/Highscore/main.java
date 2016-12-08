@@ -1,4 +1,5 @@
-package Application.Highscore;/**
+package Application.Highscore;
+/**
  * Created by siro on 23.11.16.
  */
 
@@ -36,17 +37,17 @@ public class main extends Application {
 
         Integer score;
 
-        score =  db.readPlayerScore(h1);
+        score = db.readPlayerScore(h1);
 
-        System.out.println("Score von h1: " +score);
+        System.out.println("Score von h1: " + score);
 
         List<HiscoreEntry> highscores;
         highscores = db.readHighscores();
 
 
         System.out.println("Highscores:");
-        for (int i = 0; i < highscores.size(); i++) {
-            System.out.println(highscores.get(i).getPlayerName() + " | " +highscores.get(i).getScore());
+        for (HiscoreEntry highscore : highscores) {
+            System.out.println(highscore.getPlayerName() + " | " + highscore.getScore());
         }
 
         //db.deleteAllHighscore();

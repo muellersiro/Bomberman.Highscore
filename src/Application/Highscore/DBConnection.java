@@ -8,17 +8,15 @@ import java.sql.DriverManager;
  */
 public class DBConnection {
 
+    private final static String CONNECTION = "jdbc:sqlite:PLAYERSCORE.db";
     private static DBConnection instance = new DBConnection();
-
     private Connection dbConnection;
 
-    private final static String CONNECTION = "jdbc:sqlite:PLAYERSCORE.db";
-
-    private DBConnection(){
+    private DBConnection() {
 
     }
 
-    public static DBConnection getInstance(){
+    public static DBConnection getInstance() {
         return instance;
     }
 
@@ -39,10 +37,10 @@ public class DBConnection {
         return dbConnection;
     }
 
-    public void close(){
+    public void close() {
         try {
             dbConnection.close();
-        }catch (Exception e){
+        } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }

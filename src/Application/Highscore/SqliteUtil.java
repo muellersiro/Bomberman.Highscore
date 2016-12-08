@@ -11,7 +11,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SqliteUtil {
+class SqliteUtil {
 
 
     public SqliteUtil() {
@@ -20,20 +20,20 @@ public class SqliteUtil {
 
 
     public void update(HiscoreEntry hiscoreEntry) {
-        String sql = "UPDATE PLAYERSCORE SET SCORE = " +"'" + hiscoreEntry.getScore()+"'"  + "WHERE USERNAME = " +"'" + hiscoreEntry.getPlayerName()+"'";
+        String sql = "UPDATE PLAYERSCORE SET SCORE = " + "'" + hiscoreEntry.getScore() + "'" + "WHERE USERNAME = " + "'" + hiscoreEntry.getPlayerName() + "'";
         executeSQL(sql);
 
     }
 
     public void insert(HiscoreEntry hiscoreEntry) {
-        String sql = "INSERT INTO PLAYERSCORE ( USERNAME,SCORE ) VALUES(" +"'" + hiscoreEntry.getPlayerName() + "'," + "'" + hiscoreEntry.getScore() + "'" +")";
+        String sql = "INSERT INTO PLAYERSCORE ( USERNAME,SCORE ) VALUES(" + "'" + hiscoreEntry.getPlayerName() + "'," + "'" + hiscoreEntry.getScore() + "'" + ")";
         executeSQL(sql);
     }
 
     public void delete(HiscoreEntry hiscoreEntry) {
-        String sql = "DELETE FROM PLAYERSCORE WHERE USERNAME = " +"'" + hiscoreEntry.getPlayerName() +"'";
+        String sql = "DELETE FROM PLAYERSCORE WHERE USERNAME = " + "'" + hiscoreEntry.getPlayerName() + "'";
         executeSQL(sql);
-        System.out.println("Deleted Highscore from "+hiscoreEntry.getPlayerName());
+        System.out.println("Deleted Highscore from " + hiscoreEntry.getPlayerName());
     }
 
     public void deleteAll() {
@@ -49,7 +49,7 @@ public class SqliteUtil {
 
         String sql = "SELECT USERNAME, SCORE FROM PLAYERSCORE";
         res = executeSQLwithResult(sql);
-        highscores = new ArrayList<HiscoreEntry>();
+        highscores = new ArrayList<>();
         try {
             while (res.next()) {
                 HiscoreEntry h = new HiscoreEntry();
@@ -59,6 +59,7 @@ public class SqliteUtil {
                 highscores.add(h);
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
 
         return highscores;
@@ -68,28 +69,28 @@ public class SqliteUtil {
         ResultSet res;
         Integer score = null;
 
-        String sql = "SELECT SCORE FROM PLAYERSCORE WHERE USERNAME = " +"'"+ hiscoreEntry.getPlayerName()+"'";
+        String sql = "SELECT SCORE FROM PLAYERSCORE WHERE USERNAME = " + "'" + hiscoreEntry.getPlayerName() + "'";
         res = executeSQLwithResult(sql);
         try {
             while (res.next()) {
                 score = res.getInt("SCORE");
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
         return score;
     }
 
     public boolean ifDBExists() {
-        boolean exists = false;
+        boolean exists;
 
-        File file = new File ("PLAYERSCORE.db");
+        File file = new File("PLAYERSCORE.db");
 
-        if(file.exists()) //here's how to check
+        if (file.exists()) //here's how to check
         {
             System.out.println("This database already exists");
             exists = true;
-        }
-        else{
+        } else {
             exists = false;
         }
 
@@ -110,9 +111,9 @@ public class SqliteUtil {
     public void createTable() {
 
         String sql = "CREATE TABLE IF NOT EXISTS PLAYERSCORE (ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
-                     "USERNAME       TEXT    NOT NULL UNIQUE, " +
-                     "SCORE          INT     NOT NULL " +
-                     ")";
+                "USERNAME       TEXT    NOT NULL UNIQUE, " +
+                "SCORE          INT     NOT NULL " +
+                ")";
 
         executeSQL(sql);
 

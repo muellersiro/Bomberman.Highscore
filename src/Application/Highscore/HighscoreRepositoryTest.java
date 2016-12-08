@@ -1,7 +1,6 @@
 package Application.Highscore;
 
 import application.network.protocol.HiscoreEntry;
-import org.junit.runners.JUnit4;
 
 import java.util.List;
 

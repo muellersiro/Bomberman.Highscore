@@ -17,9 +17,9 @@ public class HighscoreRepository extends Highscore {
     public HighscoreRepository() {
         boolean exists;
 
-        exists  = sqliteUtil.ifDBExists();
+        exists = sqliteUtil.ifDBExists();
 
-        if (exists == false){
+        if (!exists) {
             sqliteUtil.createDB();
         }
         sqliteUtil.createTable();
@@ -45,7 +45,7 @@ public class HighscoreRepository extends Highscore {
     @Override
     public Integer readPlayerScore(HiscoreEntry hiscoreEntry) {
 
-        Integer score = null;
+        Integer score;
 
         score = sqliteUtil.getHighscore(hiscoreEntry);
 
@@ -64,12 +64,12 @@ public class HighscoreRepository extends Highscore {
     }
 
     @Override
-    public  void deleteHighscore(HiscoreEntry hiscoreEntry){
+    public void deleteHighscore(HiscoreEntry hiscoreEntry) {
         sqliteUtil.delete(hiscoreEntry);
     }
 
     @Override
-    public  void deleteAllHighscore(){
+    public void deleteAllHighscore() {
         sqliteUtil.deleteAll();
     }
 
@@ -79,7 +79,7 @@ public class HighscoreRepository extends Highscore {
 
         score = sqliteUtil.getHighscore(hiscoreEntry);
 
-        if (score != null){
+        if (score != null) {
             state = true;
             System.out.println("User already exists");
         }
