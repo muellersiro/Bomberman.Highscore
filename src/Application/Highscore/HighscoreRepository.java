@@ -63,10 +63,12 @@ public class HighscoreRepository extends Highscore {
         return list;
     }
 
+    @Override
     public  void deleteHighscore(HiscoreEntry hiscoreEntry){
         sqliteUtil.delete(hiscoreEntry);
     }
 
+    @Override
     public  void deleteAllHighscore(){
         sqliteUtil.deleteAll();
     }
