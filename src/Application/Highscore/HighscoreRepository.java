@@ -11,7 +11,7 @@ import java.util.List;
 
 public class HighscoreRepository extends Highscore {
 
-    private SqliteUtil sqliteUtil = new SqliteUtil();
+    private final SqliteUtil sqliteUtil = new SqliteUtil();
 
 
     public HighscoreRepository() {
@@ -39,6 +39,17 @@ public class HighscoreRepository extends Highscore {
             sqliteUtil.insert(hiscoreEntry);
             System.out.print("Record inserted successfully");
         }
+
+    }
+
+    @Override
+    public void insertPlayer(HiscoreEntry hiscoreEntry) {
+
+        if (hiscoreEntry.getPlayerName() != null){
+            System.out.println("HiscoreEntryobject not good");
+        }
+
+        sqliteUtil.insert(hiscoreEntry);
 
     }
 
@@ -73,7 +84,8 @@ public class HighscoreRepository extends Highscore {
         sqliteUtil.deleteAll();
     }
 
-    private boolean ifPlayerExists(HiscoreEntry hiscoreEntry) {
+    @Override
+    public boolean ifPlayerExists(HiscoreEntry hiscoreEntry) {
         Boolean state = false;
         Integer score;
 

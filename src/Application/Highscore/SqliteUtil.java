@@ -100,11 +100,7 @@ class SqliteUtil {
 
     public void createDB() {
         Connection con = DBConnection.getInstance().getDBConnection();
-        try {
-            con.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
 
     }
 

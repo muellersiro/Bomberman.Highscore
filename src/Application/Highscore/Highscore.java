@@ -13,10 +13,16 @@ abstract class Highscore {
 
     public abstract Integer readPlayerScore(HiscoreEntry Highscore);
 
+    public abstract boolean ifPlayerExists(HiscoreEntry Highscore);
+
+    public abstract void insertPlayer(HiscoreEntry Highscore);
+
     public abstract void deleteHighscore(HiscoreEntry Highscore);
 
     public abstract void deleteAllHighscore();
 
     public abstract List<HiscoreEntry> readHighscores();
+
+
 }
 
