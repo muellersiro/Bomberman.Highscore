@@ -7,8 +7,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="sqlite-jdbc-3.14.2.1" level="project" />
-    <orderEntry type="library" name="hamcrest-core-1.1" level="project" />
+    <orderEntry type="library" name="Sqlite jdbc" level="project" />
+    <orderEntry type="library" name="Protocol" level="project" />
     <orderEntry type="module-library">
       <library name="JUnit4">
         <CLASSES>
