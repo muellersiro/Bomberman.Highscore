@@ -54,9 +54,9 @@ public class HighscoreRepository extends Highscore {
     }
 
     @Override
-    public Integer readPlayerScore(HiscoreEntry hiscoreEntry) {
+    public int readPlayerScore(HiscoreEntry hiscoreEntry) {
 
-        Integer score;
+        int score;
 
         score = sqliteUtil.getHighscore(hiscoreEntry);
 
@@ -87,11 +87,11 @@ public class HighscoreRepository extends Highscore {
     @Override
     public boolean ifPlayerExists(HiscoreEntry hiscoreEntry) {
         Boolean state = false;
-        Integer score;
+        int score;
 
         score = sqliteUtil.getHighscore(hiscoreEntry);
 
-        if (score != null) {
+        if (score != -1) {
             state = true;
             System.out.println("User already exists");
         }

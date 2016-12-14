@@ -1,8 +1,10 @@
-package Application.Highscore;
+package Application.Highscore.tests;
 /**
  * Created by siro on 23.11.16.
  */
 
+import Application.Highscore.Highscore;
+import Application.Highscore.HighscoreRepository;
 import application.network.protocol.HiscoreEntry;
 import javafx.application.Application;
 import javafx.stage.Stage;

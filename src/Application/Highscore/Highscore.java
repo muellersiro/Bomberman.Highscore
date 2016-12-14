@@ -11,7 +11,7 @@ public abstract class Highscore {
 
     public abstract void updatePlayerScore(HiscoreEntry Highscore);
 
-    public abstract Integer readPlayerScore(HiscoreEntry Highscore);
+    public abstract int readPlayerScore(HiscoreEntry Highscore);
 
     public abstract boolean ifPlayerExists(HiscoreEntry Highscore);
 

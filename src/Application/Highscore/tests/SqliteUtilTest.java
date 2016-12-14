@@ -1,5 +1,8 @@
-package Application.Highscore;
+package Application.Highscore.tests;
 
+import Application.Highscore.DBConnection;
+import Application.Highscore.Highscore;
+import Application.Highscore.HighscoreRepository;
 import application.network.protocol.HiscoreEntry;
 import org.junit.Test;
 
@@ -7,7 +10,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by siro on 14.12.16.
@@ -24,7 +27,6 @@ public class SqliteUtilTest {
         Highscore db = new HighscoreRepository();
 
         db.updatePlayerScore(h1);
-
 
 
         //Check

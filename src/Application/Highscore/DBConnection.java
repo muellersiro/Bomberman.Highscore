@@ -8,7 +8,7 @@ import java.sql.DriverManager;
  */
 public class DBConnection {
 
-    private final static String CONNECTION = "jdbc:sqlite:src/db/PLAYERSCORE.db";
+    private final static String CONNECTION = "jdbc:sqlite:src/Application/Highscore/db/PLAYERSCORE.db";
 
     private static final DBConnection instance = new DBConnection();
     private Connection dbConnection;

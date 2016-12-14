@@ -7,7 +7,9 @@ package Application.Highscore;
 import application.network.protocol.HiscoreEntry;
 
 import java.io.File;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,9 +67,9 @@ public class SqliteUtil {
         return highscores;
     }
 
-    public Integer getHighscore(HiscoreEntry hiscoreEntry) {
+    public int getHighscore(HiscoreEntry hiscoreEntry) {
         ResultSet res;
-        Integer score = null;
+        int score = -1;
 
         String sql = "SELECT SCORE FROM PLAYERSCORE WHERE USERNAME = " + "'" + hiscoreEntry.getPlayerName() + "'";
         res = executeSQLwithResult(sql);
