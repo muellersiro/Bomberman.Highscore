@@ -22,7 +22,7 @@ public class SqliteUtilTest {
         //Run
         HiscoreEntry h1 = new HiscoreEntry();
         h1.setPlayerName("Siro");
-        h1.setScore(15);
+        h1.setScore(999);
 
         Highscore db = new HighscoreRepository();
 

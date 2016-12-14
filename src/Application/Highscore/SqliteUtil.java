@@ -86,13 +86,17 @@ class SqliteUtil {
     public boolean ifDBExists() {
         boolean exists;
 
-        File file = new File("PLAYERSCORE.db");
+        File file = new File("src/db/PLAYERSCORE.db");
+
 
         if (file.exists()) //here's how to check
         {
             System.out.println("This database already exists");
             exists = true;
         } else {
+
+            this.createFolder("src/db");
+
             exists = false;
         }
 
@@ -146,6 +150,15 @@ class SqliteUtil {
 
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void createFolder(String folderName) {
+        boolean success;
+
+        success = (new File(folderName)).mkdirs();
+        if (!success) {
+            System.out.println("Folder Creation failed");
         }
     }
 }
