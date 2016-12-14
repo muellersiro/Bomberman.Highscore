@@ -2,6 +2,9 @@ package Application.Highscore;
 
 import application.network.protocol.HiscoreEntry;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -19,6 +22,38 @@ public class HighscoreRepositoryTest {
         Highscore db = new HighscoreRepository();
 
         db.updatePlayerScore(h1);
+
+
+
+        //Überprüfen
+        ResultSet res = null;
+        int score = 0;
+
+        String sql = "SELECT SCORE FROM PLAYERSCORE WHERE USERNAME = " + "'" + h1.getPlayerName() + "'";
+
+        Connection con = DBConnection.getInstance().getDBConnection();
+        Statement stmt;
+
+        try {
+            stmt = con.createStatement();
+            res = stmt.executeQuery(sql);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            while (res.next()) {
+                score = res.getInt("SCORE");
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        assertEquals(h1.getScore(), score);
 
     }
 

@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by siro on 20.11.16.
  */
-abstract class Highscore {
+public abstract class Highscore {
 
     public abstract void updatePlayerScore(HiscoreEntry Highscore);
 

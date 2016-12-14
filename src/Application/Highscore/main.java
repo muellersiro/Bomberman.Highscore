@@ -18,7 +18,7 @@ public class main extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        HiscoreEntry h = new HiscoreEntry();
+         HiscoreEntry h = new HiscoreEntry();
 
         h.setPlayerName("Iseli");
         h.setScore(6);

@@ -45,7 +45,7 @@ public class HighscoreRepository extends Highscore {
     @Override
     public void insertPlayer(HiscoreEntry hiscoreEntry) {
 
-        if (hiscoreEntry.getPlayerName() != null){
+        if (hiscoreEntry.getPlayerName() == null){
             System.out.println("HiscoreEntryobject not good");
         }
 

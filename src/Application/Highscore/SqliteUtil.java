@@ -11,7 +11,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-class SqliteUtil {
+public class SqliteUtil {
 
 
     public SqliteUtil() {
