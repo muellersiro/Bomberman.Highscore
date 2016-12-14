@@ -1,7 +1,7 @@
 package Application.Highscore;
 
-/**
- * Created by siro on 20.11.16.
+/*
+  Created by siro on 23.11.16.
  */
 
 import application.network.protocol.HiscoreEntry;
@@ -13,7 +13,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SqliteUtil {
+class SqliteUtil {
 
 
     public SqliteUtil() {

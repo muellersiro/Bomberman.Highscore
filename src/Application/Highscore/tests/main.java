@@ -1,6 +1,7 @@
 package Application.Highscore.tests;
-/**
- * Created by siro on 23.11.16.
+
+/*
+  Created by siro on 23.11.16.
  */
 
 import Application.Highscore.Highscore;
