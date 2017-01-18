@@ -17,7 +17,7 @@ public class DBConnection {
 
     }
 
-    public static DBConnection getInstance() {
+    public static synchronized DBConnection getInstance() {
         return instance;
     }
 
@@ -38,13 +38,4 @@ public class DBConnection {
         return dbConnection;
     }
 
-    public void close() {
-        try {
-            dbConnection.close();
-        } catch (Exception e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-        }
-
-    }
 }
